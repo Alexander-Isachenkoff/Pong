@@ -3,6 +3,7 @@ package pong;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import pong.model.GameModel;
 
@@ -47,4 +48,23 @@ public class PongController {
 
         gameModel.start();
     }
+
+    void setPlayer1Name(String name) {
+        p1Name.setText(name);
+    }
+
+    void setPlayer2Name(String name) {
+        p2Name.setText(name);
+    }
+
+    void setPlayer1Color(Color color) {
+        p1Name.setTextFill(color);
+        p1Rect.setFill(color);
+    }
+
+    void setPlayer2Color(Color color) {
+        p2Name.setTextFill(color);
+        p2Rect.setFill(color);
+    }
+
 }
