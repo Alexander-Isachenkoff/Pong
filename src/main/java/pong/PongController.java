@@ -14,6 +14,8 @@ public class PongController {
     public Group ball;
     public Label p1Score;
     public Label p2Score;
+    public Label p1Name;
+    public Label p2Name;
 
     @FXML
     private void initialize() {
