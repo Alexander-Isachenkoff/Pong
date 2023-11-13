@@ -8,9 +8,11 @@ import javafx.collections.ObservableSet;
 import javafx.scene.input.KeyCode;
 
 import java.util.Random;
+import java.util.function.Consumer;
 
 public class GameModel {
 
+    private static final int MAX_SCORE = 11;
     private final Player player1 = new Player(this);
     private final Player player2 = new Player(this);
     private final IntegerProperty player1Score = new SimpleIntegerProperty(-1);
@@ -19,10 +21,24 @@ public class GameModel {
     private final ObservableSet<KeyCode> keysPressed = FXCollections.observableSet();
     private final double width = 500;
     private final double height = 500;
+    private final AnimationTimer timer;
     private long lastUpdate;
-    private AnimationTimer timer;
     private Runnable onNewRound = () -> {
     };
+    private Consumer<Player> onWin = (winner) -> {
+    };
+
+    public GameModel() {
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (lastUpdate == 0) {
+                    lastUpdate = now;
+                }
+                update(now);
+            }
+        };
+    }
 
     public Player getPlayer1() {
         return player1;
@@ -53,22 +69,11 @@ public class GameModel {
     }
 
     public void stop() {
-        if (timer != null) {
-            timer.stop();
-        }
+        timer.stop();
     }
 
     public void start() {
         lastUpdate = 0;
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (lastUpdate == 0) {
-                    lastUpdate = now;
-                }
-                update(now);
-            }
-        };
         timer.start();
     }
 
@@ -111,12 +116,22 @@ public class GameModel {
 
         if (ball.getY() <= 0) {
             player1Score.set(player1Score.get() + 1);
-            newRound();
+            if (player1Score.get() == MAX_SCORE) {
+                stop();
+                onWin.accept(player1);
+            } else {
+                newRound();
+            }
         }
 
         if (ball.getY() >= getHeight() - ball.getSize()) {
             player2Score.set(player2Score.get() + 1);
-            newRound();
+            if (player2Score.get() == MAX_SCORE) {
+                stop();
+                onWin.accept(player2);
+            } else {
+                newRound();
+            }
         }
     }
 
@@ -134,5 +149,9 @@ public class GameModel {
 
     public void setOnNewRound(Runnable onNewRound) {
         this.onNewRound = onNewRound;
+    }
+
+    public void setOnWin(Consumer<Player> onWin) {
+        this.onWin = onWin;
     }
 }

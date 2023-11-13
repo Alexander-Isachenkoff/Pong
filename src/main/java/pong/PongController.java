@@ -7,6 +7,7 @@ import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -60,6 +61,19 @@ public class PongController {
 
         gameModel.setOnNewRound(this::onNewRound);
 
+        gameModel.setOnWin(winner -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            String playerName;
+            if (winner == gameModel.getPlayer1()) {
+                playerName = p1Name.getText();
+            } else {
+                playerName = p2Name.getText();
+            }
+            alert.setHeaderText(playerName + " wins!");
+            alert.show();
+            alert.setOnHidden(event -> toMenu());
+        });
+
         gameModel.restart();
     }
 
@@ -110,11 +124,19 @@ public class PongController {
     }
 
     @FXML
-    private void onMenu() throws IOException {
+    private void onMenu() {
+        toMenu();
+    }
+
+    private void toMenu() {
         gameModel.stop();
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("main.fxml"));
 
-        p1Score.getScene().setRoot(loader.load());
+        try {
+            p1Score.getScene().setRoot(loader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         MainController controller = loader.getController();
         controller.name1.setText(p1Name.getText());
