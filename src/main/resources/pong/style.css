@@ -2,8 +2,17 @@
     -fx-background-color: #333;
 }
 
-.label, .button {
+.menu-label .text {
+    -fx-fill: #aaa;
+}
+
+.button {
     -fx-text-fill: #fafafa;
+}
+
+.menu-label .text, .button .text {
+    -fx-font-family: "GOST Type B";
+    -fx-font-size: 24;
 }
 
 .text-field {
@@ -12,6 +21,9 @@
     -fx-border-color: WHITE;
     -fx-border-width: 0 0 1 0;
     -fx-text-fill: #fafafa;
+    -fx-highlight-fill: GRAY;
+    -fx-font-size: 24;
+    -fx-font-family: "GOST Type B";
 }
 
 .color-picker, .button {
@@ -61,7 +73,16 @@
 }
 
 .score1 .text, .score2 .text {
+    -fx-fill: BLACK;
+    -fx-font-family: "System";
     -fx-font-size: 24;
     -fx-font-weight: bold;
     -fx-font-smoothing-type: GRAY;
+}
+
+.title .text {
+    -fx-fill: #fafafa;
+    -fx-font-family: "GOST Type BU";
+    -fx-font-smoothing-type: GRAY;
+    -fx-font-size: 72;
 }

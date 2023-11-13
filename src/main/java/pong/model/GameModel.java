@@ -20,6 +20,7 @@ public class GameModel {
     private final double width = 500;
     private final double height = 500;
     private long lastUpdate;
+    private AnimationTimer timer;
 
     public Player getPlayer1() {
         return player1;
@@ -45,7 +46,7 @@ public class GameModel {
         player1Score.set(0);
         player2Score.set(0);
         newRound();
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 if (lastUpdate == 0) {
@@ -55,6 +56,10 @@ public class GameModel {
             }
         };
         timer.start();
+    }
+
+    public void stop() {
+        timer.stop();
     }
 
     private void newRound() {
@@ -102,7 +107,6 @@ public class GameModel {
             player2Score.set(player2Score.get() + 1);
             newRound();
         }
-
     }
 
     public ObservableSet<KeyCode> getKeysPressed() {

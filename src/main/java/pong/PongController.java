@@ -1,11 +1,14 @@
 package pong;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import pong.model.GameModel;
+
+import java.io.IOException;
 
 public class PongController {
 
@@ -21,12 +24,14 @@ public class PongController {
     @FXML
     private void initialize() {
         p1Rect.sceneProperty().addListener((observable, oldValue, scene) -> {
-            scene.setOnKeyPressed(event -> {
-                gameModel.getKeysPressed().add(event.getCode());
-            });
-            scene.setOnKeyReleased(event -> {
-                gameModel.getKeysPressed().remove(event.getCode());
-            });
+            if (scene != null) {
+                scene.setOnKeyPressed(event -> {
+                    gameModel.getKeysPressed().add(event.getCode());
+                });
+                scene.setOnKeyReleased(event -> {
+                    gameModel.getKeysPressed().remove(event.getCode());
+                });
+            }
         });
 
         p1Rect.translateXProperty().bind(gameModel.getPlayer1().positionProperty());
@@ -65,6 +70,20 @@ public class PongController {
     void setPlayer2Color(Color color) {
         p2Name.setTextFill(color);
         p2Rect.setFill(color);
+    }
+
+    @FXML
+    private void onMenu() throws IOException {
+        gameModel.stop();
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("main.fxml"));
+
+        p1Score.getScene().setRoot(loader.load());
+
+        MainController controller = loader.getController();
+        controller.name1.setText(p1Name.getText());
+        controller.name2.setText(p2Name.getText());
+        controller.color1.setValue((Color) p1Rect.getFill());
+        controller.color2.setValue((Color) p2Rect.getFill());
     }
 
 }
