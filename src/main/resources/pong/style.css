@@ -86,3 +86,15 @@
     -fx-font-smoothing-type: GRAY;
     -fx-font-size: 72;
 }
+
+.timer-label {
+    -fx-alignment: CENTER;
+}
+
+.timer-label .text {
+    -fx-fill: RED;
+    -fx-font-smoothing-type: GRAY;
+    -fx-font-weight: bold;
+    -fx-font-size: 72;
+    -fx-stroke: #fafafa;
+}

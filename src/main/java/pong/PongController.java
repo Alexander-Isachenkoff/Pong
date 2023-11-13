@@ -1,11 +1,17 @@
 package pong;
 
+import javafx.animation.ParallelTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import pong.model.GameModel;
 
 import java.io.IOException;
@@ -20,6 +26,7 @@ public class PongController {
     public Label p2Score;
     public Label p1Name;
     public Label p2Name;
+    public AnchorPane gamePane;
 
     @FXML
     private void initialize() {
@@ -51,7 +58,37 @@ public class PongController {
             p2Score.setText(String.valueOf(newValue));
         });
 
-        gameModel.start();
+        gameModel.setOnNewRound(this::onNewRound);
+
+        gameModel.restart();
+    }
+
+    private void onNewRound() {
+        int pause = 3;
+        SequentialTransition sq = new SequentialTransition();
+        for (int i = pause; i > 0; i--) {
+            Label label = new Label(String.valueOf(i));
+            label.getStyleClass().add("timer-label");
+            AnchorPane.setTopAnchor(label, 0.0);
+            AnchorPane.setBottomAnchor(label, 0.0);
+            AnchorPane.setLeftAnchor(label, 0.0);
+            AnchorPane.setRightAnchor(label, 0.0);
+            label.setScaleX(0);
+            label.setScaleY(0);
+
+            gamePane.getChildren().add(label);
+
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), label);
+            st.setToX(1);
+            st.setToY(1);
+
+            ParallelTransition pt = new ParallelTransition(new PauseTransition(Duration.seconds(1)), st);
+            sq.getChildren().add(pt);
+            pt.setOnFinished(event -> gamePane.getChildren().remove(label));
+        }
+        sq.setOnFinished(event -> gameModel.start());
+        gameModel.stop();
+        sq.play();
     }
 
     void setPlayer1Name(String name) {

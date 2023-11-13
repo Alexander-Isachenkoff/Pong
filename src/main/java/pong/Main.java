@@ -16,6 +16,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("main.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
+        stage.setTitle("Pong");
         stage.setResizable(false);
         stage.sizeToScene();
         stage.show();

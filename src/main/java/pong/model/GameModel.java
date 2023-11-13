@@ -21,6 +21,8 @@ public class GameModel {
     private final double height = 500;
     private long lastUpdate;
     private AnimationTimer timer;
+    private Runnable onNewRound = () -> {
+    };
 
     public Player getPlayer1() {
         return player1;
@@ -42,10 +44,22 @@ public class GameModel {
         return height;
     }
 
-    public void start() {
+    public void restart() {
         player1Score.set(0);
         player2Score.set(0);
+        stop();
+        start();
         newRound();
+    }
+
+    public void stop() {
+        if (timer != null) {
+            timer.stop();
+        }
+    }
+
+    public void start() {
+        lastUpdate = 0;
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -58,10 +72,6 @@ public class GameModel {
         timer.start();
     }
 
-    public void stop() {
-        timer.stop();
-    }
-
     private void newRound() {
         Random random = new Random();
         player1.setPosition((getWidth() - player1.getWidth()) / 2);
@@ -70,6 +80,7 @@ public class GameModel {
         ball.setX(getWidth() / 2);
         ball.setY(getHeight() / 2);
         ball.setAngle((45 + random.nextInt(90)) * (random.nextBoolean() ? 1 : -1));
+        onNewRound.run();
     }
 
     private void update(long now) {
@@ -121,4 +132,7 @@ public class GameModel {
         return player2Score;
     }
 
+    public void setOnNewRound(Runnable onNewRound) {
+        this.onNewRound = onNewRound;
+    }
 }
