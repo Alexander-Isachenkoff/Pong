@@ -13,18 +13,18 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import pong.model.GameModel;
 import pong.model.Player;
+import pong.model.PlayerRectangle;
 
 import java.io.IOException;
 
 public class PongController {
 
     private final GameModel gameModel = new GameModel();
-    public Rectangle p1Rect;
-    public Rectangle p2Rect;
+    private final PlayerRectangle p1Rect = new PlayerRectangle(gameModel.getPlayer1());
+    private final PlayerRectangle p2Rect = new PlayerRectangle(gameModel.getPlayer2());
     public Group ball;
     public Label p1Score;
     public Label p2Score;
@@ -34,6 +34,11 @@ public class PongController {
 
     @FXML
     private void initialize() {
+        gamePane.getChildren().add(p1Rect);
+        gamePane.getChildren().add(p2Rect);
+        AnchorPane.setBottomAnchor(p1Rect, 0.0);
+        AnchorPane.setTopAnchor(p2Rect, 0.0);
+
         p1Rect.sceneProperty().addListener((observable, oldValue, scene) -> {
             if (scene != null) {
                 scene.setOnKeyPressed(event -> {
@@ -44,13 +49,6 @@ public class PongController {
                 });
             }
         });
-
-        p1Rect.translateXProperty().bind(gameModel.getPlayer1().positionProperty());
-        p2Rect.translateXProperty().bind(gameModel.getPlayer2().positionProperty());
-        p1Rect.widthProperty().bind(gameModel.getPlayer1().widthProperty());
-        p2Rect.widthProperty().bind(gameModel.getPlayer2().widthProperty());
-        p1Rect.heightProperty().bind(gameModel.getPlayer1().heightProperty());
-        p2Rect.heightProperty().bind(gameModel.getPlayer2().heightProperty());
 
         ball.translateXProperty().bind(gameModel.getBall().xProperty());
         ball.translateYProperty().bind(gameModel.getBall().yProperty());
@@ -69,8 +67,6 @@ public class PongController {
         p2Name.textProperty().bind(gameModel.getPlayer2().nameProperty());
         p1Name.textFillProperty().bind(gameModel.getPlayer1().colorProperty());
         p2Name.textFillProperty().bind(gameModel.getPlayer2().colorProperty());
-        p1Rect.fillProperty().bind(gameModel.getPlayer1().colorProperty());
-        p2Rect.fillProperty().bind(gameModel.getPlayer2().colorProperty());
 
         gameModel.restart();
     }

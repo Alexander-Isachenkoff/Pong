@@ -52,8 +52,6 @@
          <children>
             <AnchorPane fx:id="gamePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-border-color: GRAY; -fx-background-color: black;">
                <children>
-                  <Rectangle fx:id="p2Rect" arcHeight="16.0" arcWidth="16.0" fill="LIME" height="16.0" layoutY="454.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="80.0" AnchorPane.topAnchor="0.0" />
-                  <Rectangle fx:id="p1Rect" arcHeight="16.0" arcWidth="16.0" fill="RED" height="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="80.0" AnchorPane.bottomAnchor="0.0" />
                   <Group fx:id="ball" translateX="100.0" translateY="100.0">
                      <children>
                         <Circle centerX="8.0" centerY="8.0" fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
