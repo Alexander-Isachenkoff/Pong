@@ -1,7 +1,42 @@
+.root {
+    -fx-background-color: #333;
+}
+
+.label, .button {
+    -fx-text-fill: #fafafa;
+}
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: WHITE;
+    -fx-border-width: 0 0 1 0;
+    -fx-text-fill: #fafafa;
+}
+
+.color-picker, .button {
+    -fx-background-color: #444;
+    -fx-background-insets: 0;
+}
+
+.color-picker .text {
+    visibility: hidden;
+}
+
+.color-picker .picker-color-rect {
+    -fx-scale-x: 1.75;
+    -fx-scale-y: 1.75;
+    -fx-translate-x: 3;
+}
+
+.color-picker:hover, .button:hover {
+    -fx-background-color: #555;
+}
+
 .player1-name .text, .player2-name .text {
     -fx-font-weight: bold;
     -fx-font-size: 24;
-   }
+}
 
 .player1-name .text {
     -fx-stroke: BLACK;

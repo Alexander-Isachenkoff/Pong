@@ -17,8 +17,8 @@ public class MainController {
 
     @FXML
     private void initialize() {
-        color1.setValue(Color.color(1,0,0));
-        color2.setValue(Color.color(0,1,0));
+        color1.setValue(Color.color(1, 0, 0));
+        color2.setValue(Color.color(0, 1, 0));
     }
 
     @FXML
