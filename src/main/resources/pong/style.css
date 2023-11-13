@@ -45,17 +45,9 @@
     -fx-background-color: #555;
 }
 
-.player1-name .text, .player2-name .text {
+.player-name .text {
     -fx-font-weight: bold;
     -fx-font-size: 24;
-}
-
-.player1-name .text {
-    -fx-stroke: BLACK;
-    -fx-stroke-type: OUTSIDE;
-}
-
-.player2-name .text {
     -fx-stroke: BLACK;
     -fx-stroke-type: OUTSIDE;
 }

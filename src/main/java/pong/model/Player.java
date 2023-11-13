@@ -1,8 +1,7 @@
 package pong.model;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.*;
+import javafx.scene.paint.Color;
 
 public class Player {
 
@@ -11,6 +10,8 @@ public class Player {
     private final DoubleProperty width = new SimpleDoubleProperty(80);
     private final DoubleProperty height = new SimpleDoubleProperty(16);
     private final double speed = 300;
+    private StringProperty name = new SimpleStringProperty();
+    private ObjectProperty<Color> color = new SimpleObjectProperty<>();
     private double currentSpeed;
 
     Player(GameModel gameModel) {
@@ -63,6 +64,30 @@ public class Player {
 
     double getHeight() {
         return height.get();
+    }
+
+    public ReadOnlyObjectProperty<Color> colorProperty() {
+        return color;
+    }
+
+    public Color getColor() {
+        return color.get();
+    }
+
+    public void setColor(Color color) {
+        this.color.set(color);
+    }
+
+    public ReadOnlyStringProperty nameProperty() {
+        return name;
+    }
+
+    public String getName() {
+        return name.get();
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
     }
 
 }
