@@ -1,5 +1,6 @@
 package pong.model;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
@@ -10,7 +11,13 @@ public class PlayerRectangle extends Rectangle {
         this.heightProperty().bind(player.heightProperty());
         this.fillProperty().bind(player.colorProperty());
         this.fillProperty().addListener((observable, oldValue, newValue) -> {
-            this.setStroke(player.getColor().darker());
+            Color stroke;
+            if (player.getColor().getBrightness() > 0.5) {
+                stroke = player.getColor().darker();
+            } else {
+                stroke = player.getColor().brighter();
+            }
+            this.setStroke(stroke);
         });
         this.setArcWidth(16);
         this.setArcHeight(16);
